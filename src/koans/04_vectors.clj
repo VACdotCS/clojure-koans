@@ -2,32 +2,54 @@
   (:require [koan-engine.core :refer :all]))
 
 (meditations
-  "You can use vectors in clojure as array-like structures"
-  (= __ (count [42]))
+  "You can use vectors in clojure as arrays"
+  (= :vector (type []))
 
-  "You can create a vector from a list"
-  (= __ (vec '(1)))
+  "They can contain anything"
+  (= [:a :b :c] [:a :b :c])
 
-  "Or from some elements"
-  (= __ (vector nil nil))
+  "Even other collections"
+  (= [1 [2 3] 4] [1 [2 3] 4])
 
-  "But you can populate it with any number of elements at once"
-  (= [1 __] (vec '(1 2)))
+  "Or even functions"
+  (= [1 2 +] [1 2 +])
 
-  "Conjoining to a vector is different than to a list"
-  (= __ (conj [111 222] 333))
+  "You can get the first element of a vector like a list"
+  (= 1 (first [1 2 3 4 5]))
 
-  "You can get the first element of a vector like so"
-  (= __ (first [:peanut :butter :and :jelly]))
+  "Or the last one"
+  (= 5 (last [1 2 3 4 5]))
 
-  "And the last in a similar fashion"
-  (= __ (last [:peanut :butter :and :jelly]))
+  "You can also get the rest"
+  (= [2 3 4 5] (rest [1 2 3 4 5]))
 
-  "Or any index if you wish"
-  (= __ (nth [:peanut :butter :and :jelly] 3))
+  "Count your blessings, count your vectors"
+  (= 4 (count [1 2 3 4]))
 
-  "You can also slice a vector"
-  (= __ (subvec [:peanut :butter :and :jelly] 1 3))
+  "Or make a new vector"
+  (= [1 2 3] (vec '(1 2 3)))
 
-  "Equality with collections is in terms of values"
-  (= (list 1 2 3) (vector 1 2 __)))
+  "Vectors can be constructed with vector function"
+  (= [1 2 3] (vector 1 2 3))
+
+  "Or with the literal syntax"
+  (= [1 2 3] [1 2 3])
+
+  "You can get an element by index"
+  (= 2 (nth [1 2 3 4 5] 1))
+
+  "You can conj to the end"
+  (= [1 2 3 4] (conj [1 2 3] 4))
+
+  "Or subvec to get a subvector"
+  (= [2 3] (subvec [1 2 3 4] 1 3))
+
+  "You can peek and pop like a stack"
+  (= 3 (peek [1 2 3]))
+  (= [1 2] (pop [1 2 3]))
+
+  "But empty vector throws on pop"
+  (= "No dice!" (try
+                 (pop [])
+                 (catch IllegalStateException _
+                   "No dice!"))))
